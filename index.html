@@ -25,8 +25,8 @@
 </body>
 
 <script>
-    const statusEl = document.querySelector('#status');
-    const logEl = document.querySelector('#log');
+    const statusEl = document.getElementById('status');
+    const logEl = document.getElementById('log');
     const inputEl = document.querySelector('#message-input');
 
     // 1. Handshake
@@ -66,5 +66,19 @@
             appendLog("[SENT]", msg);
             inputEl.value = "";
         })
+
+    document.getElementById("message-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        if(socket.readyState !== WebSocket.OPEN) {
+            appendLog("[ERROR]", "Socket Tunel  isn't Available");
+        }
+
+        const msg = inputEl.value.trim();
+        socket.send(msg);
+        appendLog("[SENT]", msg);
+        inputEl.value = "";
+    })
+
 </script>
 </html>
